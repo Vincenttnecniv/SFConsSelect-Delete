@@ -1,0 +1,51 @@
+<aura:component
+  controller="ContactsApexTrigger"
+  implements="flexipage:availableForRecordHome"
+>
+  <aura:attribute name="contacts" type="Contact[]" />
+  <aura:attribute name="selectedContacts" type="Contact[]" default="[]" />
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <div
+    class="slds-grid slds-gutters"
+    style="margin-left: 10%; margin-top: 50px;"
+  >
+    <div class="slds-col"> </div>
+    <div class="slds-col">
+      <span>
+        <h1 style="margin-bottom: 10px; font-size: 30px; color: blue; margin-left: 15px ">Select Contacts To Be Deleted:</h1>
+        <div class="slds-scrollable_y" style="height:50vh;width:30rem;margin-top: 40px ">
+          <div class="slds-text-longform">
+            <tbody>
+              <aura:iteration items="{!v.contacts}" var="contact">
+                <tr>
+                  <td>
+                    <div title="{!contact.Name}">
+                      <lightning:input
+                        type="checkbox"
+                        aura:id="contact_{!contact.Id}"
+                        label="{!contact.Name}"
+                        onchange="{!c.handleCheckboxChange}"
+                        value="{!contact.Id}"
+                      />
+                    </div>
+                  </td>
+
+                  <td style="padding-right: 15px"> {!contact.Email} </td> <td> {!contact.Phone} </td>
+                </tr>
+              </aura:iteration>
+            </tbody>
+          </div>
+        </div>
+      </span>
+      <div style="margin-top: 50px; margin-left: 120px">
+        <lightning:button
+          label="Delete Selected Contacts" 
+          onclick="{!c.deleteSelectedContacts}"
+        />
+      </div>
+    </div>
+    <div class="slds-col"> </div>
+  </div>
+</aura:component>
